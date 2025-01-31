@@ -1,5 +1,17 @@
 # SKAT
 
+## Стек-технологий
+* Golang
+* Gin
+* GraphQL
+* MinIO
+* PostgreSQL
+* Docker + Docker-compose
+* Vue
+* Nginx
+---
+
+
 ## Git flow
 
 ### Основные ветки
