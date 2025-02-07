@@ -1,5 +1,13 @@
 # SKAT
 
+## To-Do
+
+### Backend
+- [ ] Auth/Login
+- [ ] Swagger
+- [ ] Logging
+
+
 ## Стек-технологий
 * Golang
 * Gin
