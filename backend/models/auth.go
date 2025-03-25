@@ -2,21 +2,20 @@ package models
 
 import "gorm.io/gorm"
 
-type Auth struct {
+type User struct {
 	ID       int    `gorm:"primary_key" json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
 func CheckAuth(username, password string) (bool, error) {
-	var auth Auth
-	// ADD HASH
-	err := db.Select("id").Where(Auth{Username: username, Password: password}).First(&auth).Error
+	var user User
+	err := db.Select("id").Where(User{Username: username, Password: password}).First(&user).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return false, err
 	}
 
-	if auth.ID > 0 {
+	if user.ID > 0 {
 		return true, nil
 	}
 

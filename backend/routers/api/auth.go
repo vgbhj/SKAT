@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
@@ -17,18 +18,25 @@ type auth struct {
 	Password string `valid:"Required; MaxSize(50)"`
 }
 
+// @Summary Login
+// @Produce  json
+// @Param username formData string true "username"
+// @Param password formData string true "password"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /login [post]
 func Login(c *gin.Context) {
 	appG := app.Gin{C: c}
 	valid := validation.Validation{}
 
 	username := c.PostForm("username")
 	password := c.PostForm("password")
-
+	fmt.Println(username)
 	a := auth{Username: username, Password: password}
 	ok, _ := valid.Valid(&a)
 
 	if !ok {
-		app.MarkErrors(valid.Errors) // logging dont work
+		// app.MarkErrors(valid.Errors) // logging dont work
 		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
 		return
 	}

@@ -1,6 +1,8 @@
 package auth_service
 
-import "github.com/vgbhj/SKAT/models"
+import (
+	"github.com/vgbhj/SKAT/models"
+)
 
 type Auth struct {
 	Username string
