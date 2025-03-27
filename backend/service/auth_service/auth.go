@@ -9,6 +9,10 @@ type Auth struct {
 	Password string
 }
 
+func (a *Auth) CreateUser() (bool, error) {
+	return models.CreateUser(a.Username, a.Password)
+}
+
 func (a *Auth) Check() (bool, error) {
 	return models.CheckAuth(a.Username, a.Password)
 }

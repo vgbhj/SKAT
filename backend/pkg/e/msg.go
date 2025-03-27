@@ -8,6 +8,8 @@ var MsgFlags = map[int]string{
 	ERROR_AUTH_CHECK_TOKEN_TIMEOUT: "Token has timed out",
 	ERROR_AUTH_TOKEN:               "Token generation failed",
 	ERROR_AUTH:                     "Token error",
+	ERROR_ADD_USER:                 "Cant add user",
+	ERROR_ADD_USER_EXIST:           "Username already used",
 }
 
 func GetMsg(code int) string {

@@ -15,7 +15,7 @@ func InitRouter() *gin.Engine {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
-	// r.POST("/signup", api.CreateUser)
+	r.POST("/signup", api.CreateUser)
 	r.POST("/login", api.Login)
 	return r
 }
