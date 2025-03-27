@@ -3,8 +3,8 @@
 ## To-Do
 
 ### Backend
-- [ ] Auth/Login
-- [ ] Swagger
+- [x] Auth/Login
+- [x] Swagger
 - [ ] Logging
 
 

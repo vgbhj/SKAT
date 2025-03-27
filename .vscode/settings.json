@@ -5,10 +5,10 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "mydb",
             "database": "mydatabase",
             "username": "user",
-            "password": "password"
+            "password": "password",
+            "name": "mydb"
         }
     ]
 }
