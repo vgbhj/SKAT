@@ -90,3 +90,13 @@ FB: использовал eslint и prettier
 ### Объем изменений в PR
 
 Изменений в каждом mr должно быть не более 500 строк (добавление и удаление в сумме).
+
+### Develop notes
+
+* миграции на моей локалке
+```bash
+migrate -path db/migration -database "postgresql://user:password@localhost:5432/mydatabase?sslmode=disable" -verbose up
+```
+```bash
+migrate -path db/migration -database "postgresql://user:password@localhost:5432/mydatabase?sslmode=disable" -verbose down
+```
