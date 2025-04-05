@@ -6,6 +6,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	_ "github.com/vgbhj/SKAT/docs"
 	"github.com/vgbhj/SKAT/routers/api"
+	v1 "github.com/vgbhj/SKAT/routers/api/v1"
 )
 
 func InitRouter() *gin.Engine {
@@ -17,5 +18,9 @@ func InitRouter() *gin.Engine {
 
 	r.POST("/signup", api.CreateUser)
 	r.POST("/login", api.Login)
+
+	apiv1 := r.Group("/api/v1")
+
+	apiv1.POST("/materials", v1.AddMaterial)
 	return r
 }

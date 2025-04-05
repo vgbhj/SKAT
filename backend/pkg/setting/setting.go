@@ -33,6 +33,15 @@ type Database struct {
 
 var DatabaseSetting = &Database{}
 
+type Minio struct {
+	EndPoint        string
+	AccessKeyID     string
+	SecretAccessKey string
+	BucketName      string
+}
+
+var MinioSetting = &Minio{}
+
 var cfg *ini.File
 
 func Setup() {
@@ -46,6 +55,7 @@ func Setup() {
 	mapTo("app", AppSetting)
 	mapTo("server", ServerSetting)
 	mapTo("database", DatabaseSetting)
+	mapTo("minio", MinioSetting)
 
 	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
 	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second

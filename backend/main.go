@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/vgbhj/SKAT/models"
+	"github.com/vgbhj/SKAT/pkg/minio"
 	"github.com/vgbhj/SKAT/pkg/setting"
 	"github.com/vgbhj/SKAT/pkg/util"
 	"github.com/vgbhj/SKAT/routers"
@@ -16,6 +17,7 @@ func init() {
 	setting.Setup()
 	models.Setup()
 	// logging.Setup()
+	minio.Init()
 	util.Setup()
 }
 
