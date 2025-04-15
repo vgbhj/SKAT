@@ -2,6 +2,7 @@ package material_service
 
 import (
 	"mime/multipart"
+	"time"
 
 	"github.com/vgbhj/SKAT/models"
 	"github.com/vgbhj/SKAT/pkg/minio"
@@ -32,9 +33,10 @@ func (m *Material) Add() error {
 	}
 
 	material := map[string]interface{}{
-		"title":     m.Title,
-		"desc":      m.Desc,
-		"file_name": fileName,
+		"title":       m.Title,
+		"desc":        m.Desc,
+		"filename":    fileName,
+		"upload_date": time.Now(),
 	}
 
 	if err := models.AddMaterial(material); err != nil {

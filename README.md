@@ -95,8 +95,8 @@ FB: использовал eslint и prettier
 
 * миграции на моей локалке
 ```bash
-migrate -path db/migration -database "postgresql://user:password@localhost:5432/mydatabase?sslmode=disable" -verbose up
+migrate -path db/migration -database "postgresql://user:password@127.0.0.1:5432/mydatabase?sslmode=disable" -verbose up
 ```
 ```bash
-migrate -path db/migration -database "postgresql://user:password@localhost:5432/mydatabase?sslmode=disable" -verbose down
+migrate -path db/migration -database "postgresql://user:password@127.0.0.1:5432/mydatabase?sslmode=disable" -verbose down
 ```
