@@ -16,10 +16,12 @@ func JWT() gin.HandlerFunc {
 
 		code = e.SUCCESS
 		token := c.GetHeader("Authorization")
+		var claims *util.Claims
 		if token == "" {
 			code = e.INVALID_PARAMS
 		} else {
-			_, err := util.ParseToken(token)
+			var err error
+			claims, err = util.ParseToken(token)
 			if err != nil {
 				switch err.(*jwt.ValidationError).Errors {
 				case jwt.ValidationErrorExpired:
@@ -40,7 +42,7 @@ func JWT() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-
+		c.Set("currentUser", claims.Username)
 		c.Next()
 	}
 }

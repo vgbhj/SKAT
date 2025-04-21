@@ -20,7 +20,7 @@ func GenerateToken(username, password string) (string, error) {
 	expireTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
-		EncodeBcrypt(username),
+		(username),
 		EncodeBcrypt(password),
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
