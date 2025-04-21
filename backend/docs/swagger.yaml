@@ -30,6 +30,12 @@ paths:
         name: file
         required: true
         type: file
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:

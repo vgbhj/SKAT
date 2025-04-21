@@ -5,6 +5,7 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	_ "github.com/vgbhj/SKAT/docs"
+	"github.com/vgbhj/SKAT/middleware/jwt"
 	"github.com/vgbhj/SKAT/routers/api"
 	v1 "github.com/vgbhj/SKAT/routers/api/v1"
 )
@@ -21,6 +22,9 @@ func InitRouter() *gin.Engine {
 
 	apiv1 := r.Group("/api/v1")
 
-	apiv1.POST("/materials", v1.AddMaterial)
+	apiv1.Use(jwt.JWT())
+	{
+		apiv1.POST("/materials", v1.AddMaterial)
+	}
 	return r
 }

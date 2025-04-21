@@ -30,6 +30,7 @@ type AddMaterialForm struct {
 // @Success 200 {object} app.Response
 // @Failure 500 {object} app.Response
 // @Router /api/v1/materials [post]
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
 func AddMaterial(c *gin.Context) {
 	var (
 		appG = app.Gin{C: c}
