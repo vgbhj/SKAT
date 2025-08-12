@@ -62,3 +62,21 @@ func AddMaterial(c *gin.Context) {
 
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }
+
+// @Summary		Get all materials
+// @Produce 	json
+// @Success		200 {object} app.Response
+// @Failure		500 {object} app.Response
+// @Router		/api/v1/materials [get]
+func GetMaterials(c *gin.Context) {
+	appG := app.Gin{C: c}
+	materials, err := material_service.GetAll()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_GET_MATERIALS_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
+		"materials": materials,
+	})
+}

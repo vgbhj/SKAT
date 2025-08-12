@@ -16,6 +16,26 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/api/v1/materials": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get all materials",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            },
             "post": {
                 "consumes": [
                     "multipart/form-data"

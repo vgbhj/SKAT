@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Material struct {
 	ID          int       `gorm:"primary_key" json:"id"`
@@ -21,4 +23,18 @@ func AddMaterial(data map[string]interface{}) error {
 		return err
 	}
 	return nil
+}
+
+func GetMaterials() ([]Material, error) {
+	var (
+		materials []Material
+		err       error
+	)
+	err = db.Find(&materials).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return materials, nil
 }
