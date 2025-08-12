@@ -45,3 +45,12 @@ func (m *Material) Add() error {
 
 	return nil
 }
+
+func GetAll() ([]models.Material, error) {
+	materials, err := models.GetMaterials()
+	if err != nil {
+		return nil, err
+	}
+
+	return materials, nil
+}

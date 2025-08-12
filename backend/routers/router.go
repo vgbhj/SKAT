@@ -22,6 +22,8 @@ func InitRouter() *gin.Engine {
 
 	apiv1 := r.Group("/api/v1")
 
+	apiv1.GET("/materials", v1.GetMaterials)
+
 	apiv1.Use(jwt.JWT())
 	{
 		apiv1.POST("/materials", v1.AddMaterial)
