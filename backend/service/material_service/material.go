@@ -1,6 +1,7 @@
 package material_service
 
 import (
+	"fmt"
 	"mime/multipart"
 	"time"
 
@@ -12,6 +13,7 @@ type Material struct {
 	Title    string
 	Desc     string
 	FileData *multipart.FileHeader
+	UserName string
 	// user_id integer [ref: > users.id]
 	// faculty_id integer [ref: > faculty.id]
 	// subject_id integer [ref: > subject.id]
@@ -28,14 +30,19 @@ func (m *Material) Add() error {
 	}
 	defer data.Close()
 
-	if err := minio.AddFile(fileName, data, fileSize); err != nil {
+	objectPath := fmt.Sprintf(
+		"user_%s/date_%s/title_%s/%s",
+		m.UserName, time.Now().Format("2006-01-02_15-04-05"), m.Title, fileName,
+	)
+
+	if err := minio.AddFile(objectPath, data, fileSize); err != nil {
 		return err
 	}
 
 	material := map[string]interface{}{
 		"title":       m.Title,
 		"desc":        m.Desc,
-		"filename":    fileName,
+		"filename":    objectPath,
 		"upload_date": time.Now(),
 	}
 

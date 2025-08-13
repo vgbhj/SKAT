@@ -11,7 +11,7 @@ CREATE TABLE materials (
   filename VARCHAR(255) NOT NULL,
   description TEXT,
   user_id INT REFERENCES users(id),
-  upload_date DATE
+  upload_date TIMESTAMP
 );
 
 

@@ -43,6 +43,7 @@ func JWT() gin.HandlerFunc {
 			return
 		}
 		c.Set("currentUser", claims.Username)
+		// c.Set("currentUserId", claims.Username)
 		c.Next()
 	}
 }

@@ -32,6 +32,7 @@ const (
 	ERROR_AUTH                     = 10004
 	ERROR_ADD_USER                 = 10006
 	ERROR_ADD_USER_EXIST           = 10005
+	ERROR_USER_NOT_FOUND           = 10006
 
 	ERROR_ADD_MATERIAL_FAIL = 20001
 	ERROR_INVALID_FILE      = 20002

@@ -37,6 +37,12 @@ func AddMaterial(c *gin.Context) {
 		form AddMaterialForm
 	)
 
+	userName, exists := c.Get("currentUser")
+	if !exists {
+		appG.Response(http.StatusInternalServerError, e.ERROR_USER_NOT_FOUND, nil)
+		return
+	}
+
 	httpCode, errCode := app.BindAndValid(c, &form)
 	if errCode != e.SUCCESS {
 		appG.Response(httpCode, errCode, nil)
@@ -53,6 +59,7 @@ func AddMaterial(c *gin.Context) {
 		Title:    form.Title,
 		Desc:     form.Desc,
 		FileData: form.fileData,
+		UserName: userName.(string),
 	}
 
 	if err := materialService.Add(); err != nil {
