@@ -2,6 +2,7 @@ package material_service
 
 import (
 	"fmt"
+	"io"
 	"mime/multipart"
 	"time"
 
@@ -20,6 +21,35 @@ type Material struct {
 	// subject_id integer [ref: > subject.id]
 	// year_id integer [ref: > year.id]
 	// university_id integer [ref: > university.id]
+}
+
+func (m *Material) Get() (*models.Material, error) {
+	material, err := models.GetMaterial(m.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return material, nil
+}
+
+func (m *Material) GetFile() ([]byte, string, error) {
+	material, err := models.GetMaterial(m.ID)
+	if err != nil {
+		return nil, "", err
+	}
+	object, err := minio.GetFile(material.Filename)
+
+	if err != nil {
+		return nil, "", err
+	}
+
+	fileData, err := io.ReadAll(object)
+
+	if err != nil {
+		return nil, "", err
+	}
+
+	return fileData, material.Filename, nil
 }
 
 func (m *Material) Add() error {
@@ -61,4 +91,8 @@ func GetAll() ([]models.Material, error) {
 	}
 
 	return materials, nil
+}
+
+func (m *Material) ExistsByID() (bool, error) {
+	return models.ExistMaterialByID(m.ID)
 }

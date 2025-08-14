@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"mime/multipart"
 	"net/http"
 
@@ -119,4 +120,35 @@ func GetMaterial(c *gin.Context) {
 		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_MATERIAL, nil)
 		return
 	}
+
+	material, err := materialService.Get()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_GET_MATERIALS_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, material)
+}
+
+// @Summary Get a single material
+// @Produce  application/octet-stream
+// @Param id path int true "ID"
+// @Success 200 {file} file "Binary file content"
+// @Failure 500 {object} app.Response
+// @Router /api/v1/materials/{id}/download [get]
+func DownloadMaterial(c *gin.Context) {
+	appG := app.Gin{C: c}
+	id := com.StrTo(c.Param("id")).MustInt()
+	valid := validation.Validation{}
+	valid.Min(id, 1, "id")
+
+	materialService := material_service.Material{ID: id}
+	fileData, fileName, err := materialService.GetFile()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_DOWNLOAD_MATERIAL_FAIL, nil)
+		return
+	}
+
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileName))
+	c.Data(http.StatusOK, "application/octet-stream", fileData)
 }

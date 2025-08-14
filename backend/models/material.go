@@ -12,6 +12,17 @@ type Material struct {
 	Description string    `json:"desc"`
 	Filename    string    `json:"filename"`
 	UploadDate  time.Time `json:"upload_date" gorm:"not null" example:"2024-06-01T20:00:00Z"`
+	// FileData    []byte    `json:"file_data,omitempty"`
+}
+
+func GetMaterial(id int) (*Material, error) {
+	var material Material
+	err := db.Where("id = ?", id).First(&material).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+
+	return &material, nil
 }
 
 func ExistMaterialByID(id int) (bool, error) {

@@ -48,3 +48,13 @@ func AddFile(fileName string, reader io.Reader, fileSize int64) error {
 
 	return nil
 }
+
+// GetObject(ctx context.Context, bucketName, objectName string, opts GetObjectOptions) (*Object, error)
+func GetFile(fileName string) (io.ReadCloser, error) {
+	object, err := minioClient.GetObject(ctx, setting.MinioSetting.BucketName, fileName, minio.GetObjectOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return object, nil
+}

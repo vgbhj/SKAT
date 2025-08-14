@@ -23,6 +23,8 @@ func InitRouter() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 
 	apiv1.GET("/materials", v1.GetMaterials)
+	apiv1.GET("/materials/:id", v1.GetMaterial)
+	apiv1.GET("/materials/:id/download", v1.DownloadMaterial)
 
 	apiv1.Use(jwt.JWT())
 	{
