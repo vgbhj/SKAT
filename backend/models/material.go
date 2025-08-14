@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Material struct {
@@ -10,6 +12,20 @@ type Material struct {
 	Description string    `json:"desc"`
 	Filename    string    `json:"filename"`
 	UploadDate  time.Time `json:"upload_date" gorm:"not null" example:"2024-06-01T20:00:00Z"`
+}
+
+func ExistMaterialByID(id int) (bool, error) {
+	var material Material
+	err := db.Select("id").Where("id = ?", id).First(&material).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return false, err
+	}
+
+	if material.ID > 0 {
+		return true, nil
+	}
+
+	return false, nil
 }
 
 func AddMaterial(data map[string]interface{}) error {

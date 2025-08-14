@@ -10,6 +10,7 @@ import (
 )
 
 type Material struct {
+	ID       int
 	Title    string
 	Desc     string
 	FileData *multipart.FileHeader

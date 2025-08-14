@@ -4,7 +4,9 @@ import (
 	"mime/multipart"
 	"net/http"
 
+	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
+	"github.com/unknwon/com"
 	"github.com/vgbhj/SKAT/pkg/app"
 	"github.com/vgbhj/SKAT/pkg/e"
 	"github.com/vgbhj/SKAT/service/material_service"
@@ -86,4 +88,35 @@ func GetMaterials(c *gin.Context) {
 	appG.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
 		"materials": materials,
 	})
+}
+
+// @Summary Get a single material
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /api/v1/materials/{id} [get]
+func GetMaterial(c *gin.Context) {
+	appG := app.Gin{C: c}
+	id := com.StrTo(c.Param("id")).MustInt()
+	valid := validation.Validation{}
+	valid.Min(id, 1, "id")
+
+	if valid.HasErrors() {
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
+	materialService := material_service.Material{ID: id}
+	exists, err := materialService.ExistsByID()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_CHECK_EXIST_MATERIAL_FAIL, nil)
+		return
+	}
+
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_MATERIAL, nil)
+		return
+	}
 }
