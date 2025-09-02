@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Poppins', sans-serif;
+  --font-family-primary: "SF Pro Rounded", ui-rounded, system-ui, sans-serif;
   --grid-template-columns-70-30: 70% 28%;
+
+  --color-blue_main: #5761F6;
 }
