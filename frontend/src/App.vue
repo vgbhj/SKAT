@@ -5,6 +5,5 @@ import Header from '@/components/Header.vue';
 <template>
   <Header />
   <h1>123</h1>
-  <h1>123</h1>
   
 </template>

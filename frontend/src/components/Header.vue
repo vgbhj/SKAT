@@ -22,7 +22,7 @@
     />
   </svg> -->
 
-  <p class="whitespace-nowrap p-1">SKAT</p>
+  <p class="whitespace-nowrap p-1 font-medium">SKAT</p>
 </span>
 
     </a>
