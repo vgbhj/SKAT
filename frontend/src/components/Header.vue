@@ -7,7 +7,7 @@
       <span
   class="inline-flex items-center justify-center rounded-full bg-blue_main px-2.5 py-0.5 text-white dark:bg-blue_main dark:bg-blue_main"
 >
-  <svg
+  <!-- <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -20,9 +20,9 @@
       stroke-linejoin="round"
       d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
     />
-  </svg>
+  </svg> -->
 
-  <p class="whitespace-nowrap">SKAT</p>
+  <p class="whitespace-nowrap p-1">SKAT</p>
 </span>
 
     </a>
@@ -90,17 +90,17 @@
       <div class="flex items-center gap-4">
         <div class="sm:flex sm:gap-4">
           <a
-            class="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
+            class="block rounded-md px-5 py-2.5 text-sm font-medium transition text-blue_main"
             href="#"
           >
-            Login
+            зарегистрироваться
           </a>
 
           <a
-            class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
+            class="rounded-full bg-blue_main px-5 py-2.5 text-sm font-medium text-white sm:block"
             href="#"
           >
-            Register
+            войти
           </a>
         </div>
       </div>
