@@ -1,83 +1,88 @@
 <script setup>
+import { ref } from 'vue'
+
 const filters = {
   course: ['1', '2', '3', '4'],
   subjects: ['Мат.анализ', 'ООП', 'ЛинАл'],
   universities: ['РТУ МИРЭА', 'МИРОВОЕ', 'МИРОВОЙ ВУЗ', 'МИРНЫЙ ВУЗ']
 }
+
+const selectedTags = ref({
+  course: ['1', '2'],
+  subjects: ['Мат.анализ'],
+  universities: ['РТУ МИРЭА']
+})
 </script>
 
+ <!-- <button class="p-1 rounded-full bg-blue_main">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </button> -->
+
 <template>
-  <div class="space-y-4">
-    <!-- Course Filter -->
-    <details class="group [&_summary::-webkit-details-marker]:hidden">
-      <summary class="flex items-center justify-between gap-2 p-2 font-medium text-gray-900 bg-white rounded-lg cursor-pointer">
-        <span>Курс</span>
-        <span class="transition group-open:-rotate-180">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </span>
-      </summary>
+  <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm max-w-xs max-h-[600px] overflow-y-auto">
+    <!-- Header -->
+    <div class="p-4 sticky top-0 bg-white z-10">
+      <h3 class="text-lg font-medium text-gray-900">Теги</h3>
+      <div class="mt-2 h-px bg-gray-200"></div>
+    </div>
 
-      <div class="mt-2 space-y-2">
-        <div class="flex gap-2 flex-wrap">
-          <button
-            v-for="course in filters.course"
-            :key="course"
-            class="px-3 py-1 text-xs font-medium text-blue_main border border-blue_main rounded-full hover:bg-blue_main hover:text-white"
-          >
-            {{ course }}
+    <!-- Filter sections -->
+    <div class="px-4 pb-4 space-y-6">
+      <!-- Course section -->
+      <div class="space-y-2">
+        <span class="text-sm font-medium text-blue_main">Курс</span>
+        <div class="flex items-center gap-2">
+          <button class="inline-flex items-center justify-center rounded-full bg-blue_main p-1.5 text-white hover:opacity-90 transition-opacity">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
           </button>
+          <div class="flex flex-wrap gap-2">
+            <span v-for="tag in selectedTags.course" :key="tag" 
+                  class="inline-flex h-6 w-6 items-center justify-center rounded-full border-blue_main bg-[#EBF0FB] text-xs font-medium text-blue_main">
+              {{ tag }}
+            </span>
+          </div>
         </div>
       </div>
-    </details>
 
-    <!-- Subject Filter -->
-    <details class="group [&_summary::-webkit-details-marker]:hidden">
-      <summary class="flex items-center justify-between gap-2 p-2 font-medium text-gray-900 bg-white rounded-lg cursor-pointer">
-        <span>Предмет / тема</span>
-        <span class="transition group-open:-rotate-180">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </span>
-      </summary>
-
-      <div class="mt-2 space-y-2">
-        <div class="flex gap-2 flex-wrap">
-          <button
-            v-for="subject in filters.subjects"
-            :key="subject"
-            class="px-3 py-1 text-xs font-medium text-blue_main border border-blue_main rounded-full hover:bg-blue_main hover:text-white"
-          >
-            {{ subject }}
+      <!-- Subject section -->
+      <div class="space-y-2">
+        <span class="text-sm font-medium text-blue_main">Предмет / тема</span>
+        <div class="flex items-center gap-2">
+          <button class="inline-flex items-center justify-center rounded-full bg-blue_main p-1.5 text-white hover:opacity-90 transition-opacity">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
           </button>
+          <div class="flex flex-wrap gap-2">
+            <span v-for="tag in selectedTags.subjects" :key="tag" 
+                  class="inline-flex items-center rounded-full   border-blue_main bg-[#EBF0FB] px-2 py-1 text-xs font-medium text-blue_main">
+              {{ tag }}
+            </span>
+          </div>
         </div>
       </div>
-    </details>
 
-    <!-- University Filter -->
-    <details class="group [&_summary::-webkit-details-marker]:hidden">
-      <summary class="flex items-center justify-between gap-2 p-2 font-medium text-gray-900 bg-white rounded-lg cursor-pointer">
-        <span>ВУЗ и др. УЗ</span>
-        <span class="transition group-open:-rotate-180">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </span>
-      </summary>
-
-      <div class="mt-2 space-y-2">
-        <div class="flex gap-2 flex-wrap">
-          <button
-            v-for="uni in filters.universities"
-            :key="uni"
-            class="px-3 py-1 text-xs font-medium text-blue_main border border-blue_main rounded-full hover:bg-blue_main hover:text-white"
-          >
-            {{ uni }}
+      <!-- University section -->
+      <div class="space-y-2">
+        <span class="text-sm font-medium text-blue_main">ВУЗ</span>
+        <div class="flex items-center gap-2">
+          <button class="inline-flex items-center justify-center rounded-full bg-blue_main p-1.5 text-white hover:opacity-90 transition-opacity">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
           </button>
+          <div class="flex flex-wrap gap-2">
+            <span v-for="tag in selectedTags.universities" :key="tag" 
+                  class="inline-flex items-center rounded-full   border-blue_main bg-[#EBF0FB] px-2 py-1 text-xs font-medium text-blue_main">
+              {{ tag }}
+            </span>
+          </div>
         </div>
       </div>
-    </details>
+    </div>
   </div>
 </template>
