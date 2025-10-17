@@ -1,5 +1,6 @@
 <script setup>
 import Filter from '@/components/Filter.vue';
+import HomeKat from '@/components/HomeKat.vue';
 </script>
 
 <template>
@@ -12,7 +13,14 @@ import Filter from '@/components/Filter.vue';
       
       <!-- Правая колонка с контентом -->
       <div class="col-span-9">
-        <!-- Здесь будет основной контент -->
+        <h1 class="text-3xl font-bold mb-6">Последние скаты</h1>
+        <div class="space-y-4"> <!-- Added container with vertical spacing -->
+          <HomeKat />
+          <HomeKat />
+          <HomeKat />
+          <HomeKat />
+          <HomeKat />
+        </div>
       </div>
     </div>
   </main>
