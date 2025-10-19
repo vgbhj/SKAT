@@ -1,9 +1,11 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
     <header class="">
   <div class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
-    <a class="block text-teal-600 dark:text-teal-300" href="#">
+    <RouterLink class="block text-teal-600 dark:text-teal-300" to="/">
       <span
   class="inline-flex items-center justify-center rounded-full bg-blue_main px-2.5 py-0.5 text-white dark:bg-blue_main dark:bg-blue_main"
 >
@@ -25,7 +27,7 @@
   <p class="whitespace-nowrap p-1 font-medium">SKAT</p>
 </span>
 
-    </a>
+   </RouterLink>
 
     <div class="flex flex-1 items-center justify-end md:justify-between">
         <div class="flex items-center space-x-2">
@@ -88,22 +90,22 @@
     </button>
 </div>
       <div class="flex items-center gap-4">
-        <div class="sm:flex sm:gap-4">
-          <a
-            class="block rounded-md px-5 py-2.5 text-sm font-medium transition text-blue_main"
-            href="#"
-          >
-            зарегистрироваться
-          </a>
+    <div class="sm:flex sm:gap-4">
+      <RouterLink
+        to="/rega"
+        class="block rounded-md px-5 py-2.5 text-sm font-medium transition text-blue_main"
+      >
+        зарегистрироваться
+      </RouterLink>
 
-          <a
-            class="rounded-full bg-blue_main px-5 py-2.5 text-sm font-medium text-white sm:block"
-            href="#"
-          >
-            войти
-          </a>
-        </div>
-      </div>
+      <RouterLink
+        to="/login"
+        class="rounded-full bg-blue_main px-5 py-2.5 text-sm font-medium text-white sm:block"
+      >
+        войти
+      </RouterLink>
+    </div>
+  </div>
     </div>
     
   </div>
