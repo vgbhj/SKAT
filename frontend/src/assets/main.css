@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap&subset=cyrillic');
+@import 'tailwindcss';
+
+@theme {
+  --font-family: "Rubik", ui-rounded, system-ui, sans-serif;
+  --grid-template-columns-70-30: 70% 28%;
+  --color-blue_main: #5761F6;
+  --color-pale_blue: #EBF0FB;
+}
+
+body {
+  font-family: var(--font-family);
+}
