@@ -19,7 +19,6 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	// !!! REMOVE IN PROD !!!
 	distPath := "frontend/dist"
 	if _, err := os.Stat(filepath.Join(distPath, "index.html")); os.IsNotExist(err) {
 		distPath = filepath.Join("..", "frontend", "dist")
