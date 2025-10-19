@@ -2,6 +2,7 @@ package routers
 
 import (
 	"net/http"
+	"os"
 	"path/filepath"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,12 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	distPath := filepath.Join("..", "frontend", "dist")
+	// !!! REMOVE IN PROD !!!
+	distPath := "frontend/dist"
+	if _, err := os.Stat(filepath.Join(distPath, "index.html")); os.IsNotExist(err) {
+		distPath = filepath.Join("..", "frontend", "dist")
+	}
+
 	r.StaticFS("/assets", http.Dir(filepath.Join(distPath, "assets")))
 	r.StaticFile("/", filepath.Join(distPath, "index.html"))
 
