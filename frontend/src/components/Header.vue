@@ -2,17 +2,32 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
-const isAuthenticated = ref(document.cookie.includes('jwt='))
+const isAuthenticated = ref(false)
 const router = useRouter()
+
+// Check auth status on mount
+onMounted(async () => {
+  try {
+    const response = await fetch('/api/auth/me', {
+      credentials: 'include'
+    })
+    isAuthenticated.value = response.ok
+  } catch (error) {
+    console.error('Auth check failed:', error)
+    isAuthenticated.value = false
+  }
+})
 
 const handleLogout = async () => {
   try {
-    await fetch('/logout', {
+    const response = await fetch('/logout', {
       method: 'POST',
       credentials: 'include'
     })
-    isAuthenticated.value = false
-    router.push('/login')
+    if (response.ok) {
+      isAuthenticated.value = false
+      router.push('/login')
+    }
   } catch (error) {
     console.error('Logout failed:', error)
   }
