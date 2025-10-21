@@ -1,20 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
-const isAuthenticated = ref(false)
+const isAuthenticated = ref(document.cookie.includes('jwt='))
 const router = useRouter()
-
-onMounted(async () => {
-  try {
-    const response = await fetch('/api/auth/check', {
-      credentials: 'include'
-    })
-    isAuthenticated.value = response.ok
-  } catch (error) {
-    console.error('Auth check failed:', error)
-  }
-})
 
 const handleLogout = async () => {
   try {
