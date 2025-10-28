@@ -2,6 +2,7 @@ package setting
 
 import (
 	"log"
+	"os"
 	"time"
 
 	"github.com/go-ini/ini"
@@ -45,11 +46,17 @@ var MinioSetting = &Minio{}
 var cfg *ini.File
 
 func Setup() {
-	var err error
-	cfg, err = ini.Load("conf/app.ini")
+	_, err := os.Stat("/.dockerenv")
+	isDocker := !os.IsNotExist(err)
 
+	configPath := "conf/appLocal.ini"
+	if isDocker {
+		configPath = "conf/app.ini"
+	}
+
+	cfg, err = ini.Load(configPath)
 	if err != nil {
-		log.Fatalf("setting.Setup, fail to parse 'conf/app.ini': %v", err)
+		log.Fatalf("setting.Setup, fail to parse '%s': %v", configPath, err)
 	}
 
 	mapTo("app", AppSetting)

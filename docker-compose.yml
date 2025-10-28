@@ -44,6 +44,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - LOCAL_DEV=false
       - GIN_MODE=debug
       - DB_HOST=postgres
       - DB_USER=user

@@ -100,3 +100,8 @@ migrate -path db/migration -database "postgresql://user:password@127.0.0.1:5432/
 ```bash
 migrate -path db/migration -database "postgresql://user:password@127.0.0.1:5432/mydatabase?sslmode=disable" -verbose down
 ```
+
+* local run
+```bash
+LOCAL_DEV=true go run main.go
+```
