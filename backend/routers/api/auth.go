@@ -93,6 +93,16 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	c.SetCookie(
+		"token",
+		token,
+		3600*24,
+		"/",
+		"",
+		false,
+		true
+	)
+	
 	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
 		"token": token,
 	})

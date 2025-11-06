@@ -26,7 +26,7 @@ const router = createRouter({
       path: '/materials/add',
       name: 'addMaterial',
       component: AddMaterialView,
-      meta: { requiresAuth: true }
+      // meta: { requiresAuth: true }
     }
   ]
 })

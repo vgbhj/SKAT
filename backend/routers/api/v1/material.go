@@ -25,15 +25,17 @@ type AddMaterialForm struct {
 }
 
 // @Summary Add material
-// @Produce  json
+// @Produce json
 // @Accept multipart/form-data
+// @Security ApiCookieAuth
 // @Param title formData string true "Title"
 // @Param desc formData string true "Desc"
 // @Param file formData file true "Material File"
 // @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Failure 401 {object} app.Response "Unauthorized"
+// @Failure 400 {object} app.Response "Invalid input"
+// @Failure 500 {object} app.Response "Server error"
 // @Router /api/v1/materials [post]
-// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
 func AddMaterial(c *gin.Context) {
 	var (
 		appG = app.Gin{C: c}
