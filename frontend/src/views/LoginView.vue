@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const username = ref('')
 const password = ref('')
 const error = ref('')
@@ -24,6 +26,11 @@ const handleSubmit = async () => {
     })
 
     if (response.ok) {
+      const data = await response.json()
+      
+      authStore.setAuthenticated(true)
+      authStore.setUser(data.user)
+      
       router.push('/')
     } else {
       const data = await response.json()

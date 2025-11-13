@@ -1,22 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
-const isAuthenticated = ref(false)
+const authStore = useAuthStore()
 const router = useRouter()
-
-// Check auth status on mount
-onMounted(async () => {
-  try {
-    const response = await fetch('/api/auth/me', {
-      credentials: 'include'
-    })
-    isAuthenticated.value = response.ok
-  } catch (error) {
-    console.error('Auth check failed:', error)
-    isAuthenticated.value = false
-  }
-})
 
 const handleLogout = async () => {
   try {
@@ -25,7 +12,7 @@ const handleLogout = async () => {
       credentials: 'include'
     })
     if (response.ok) {
-      isAuthenticated.value = false
+      authStore.logout()
       router.push('/login')
     }
   } catch (error) {
@@ -51,6 +38,7 @@ const handleLogout = async () => {
                 type="text"
                 id="Search"
                 class="w-full rounded-full border-2 border-blue_main p-1"
+                placeholder="Поиск..."
               />
               <span class="absolute inset-y-0 right-1 grid w-8 place-content-center">
                 <button
@@ -77,11 +65,13 @@ const handleLogout = async () => {
             </div>
           </label>
 
-          <button
-            v-if="isAuthenticated"
+          <!-- Кнопка добавления материала (видна только для аутентифицированных) -->
+          <RouterLink
+            v-if="authStore.isAuthenticated"
+            to="/materials/add"
             type="button"
             aria-label="Add"
-            class="flex items-center justify-center w-8 h-8 rounded-full bg-blue_main text-white"
+            class="flex items-center justify-center w-8 h-8 rounded-full bg-blue_main text-white hover:opacity-90 transition-opacity"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -97,40 +87,58 @@ const handleLogout = async () => {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-          </button>
+          </RouterLink>
         </div>
 
         <div class="flex items-center gap-4">
           <div class="sm:flex sm:gap-4">
-            <!-- Show these buttons when user is not authenticated -->
-            <template v-if="!isAuthenticated">
+            <!-- Кнопки для неаутентифицированных пользователей -->
+            <template v-if="!authStore.isAuthenticated">
               <RouterLink
                 to="/rega"
-                class="block rounded-md px-5 py-2.5 text-sm font-medium transition text-blue_main"
+                class="block rounded-md px-5 py-2.5 text-sm font-medium transition text-blue_main hover:bg-gray-100"
               >
                 зарегистрироваться
               </RouterLink>
 
               <RouterLink
                 to="/login"
-                class="rounded-full bg-blue_main px-5 py-2.5 text-sm font-medium text-white sm:block"
+                class="rounded-full bg-blue_main px-5 py-2.5 text-sm font-medium text-white sm:block hover:opacity-90 transition-opacity"
               >
                 войти
               </RouterLink>
             </template>
 
-            <!-- Show these buttons when user is authenticated -->
+            <!-- Кнопки для аутентифицированных пользователей -->
             <template v-else>
+              <div class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-700 border-r border-gray-200">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-5 w-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                  />
+                </svg>
+                <span>{{ authStore.user?.username || 'Пользователь' }}</span>
+              </div>
+
               <RouterLink
                 to="/profile"
-                class="block rounded-md px-5 py-2.5 text-sm font-medium transition text-blue_main"
+                class="block rounded-md px-5 py-2.5 text-sm font-medium transition text-blue_main hover:bg-gray-100"
               >
                 профиль
               </RouterLink>
 
               <button
                 @click="handleLogout"
-                class="rounded-full bg-blue_main px-5 py-2.5 text-sm font-medium text-white sm:block"
+                class="rounded-full bg-blue_main px-5 py-2.5 text-sm font-medium text-white sm:block hover:opacity-90 transition-opacity"
               >
                 выйти
               </button>

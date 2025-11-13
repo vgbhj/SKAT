@@ -78,6 +78,7 @@ func Login(c *gin.Context) {
 
 	authService := auth_service.Auth{Username: username, Password: password}
 	isExist, err := authService.Check()
+	//  user, err := authService.CheckAndGetUser()
 	if err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_CHECK_TOKEN_FAIL, nil)
 		return
@@ -103,7 +104,11 @@ func Login(c *gin.Context) {
 		true,
 	)
 
-	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
-		"token": token,
+	appG.Response(http.StatusOK, e.SUCCESS, map[string]interface{}{
+		"message": "Successfully logged in",
+		"user": map[string]interface{}{
+			"id":       "user.ID",
+			"username": "user.Username",
+		},
 	})
 }
