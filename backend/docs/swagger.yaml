@@ -43,12 +43,6 @@ paths:
         name: file
         required: true
         type: file
-      - default: Bearer <Add access token here>
-        description: Insert your access token
-        in: header
-        name: Authorization
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -56,10 +50,20 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/app.Response'
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Invalid input
           schema:
             $ref: '#/definitions/app.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/app.Response'
+      security:
+      - ApiCookieAuth: []
       summary: Add material
   /api/v1/materials/{id}:
     get:

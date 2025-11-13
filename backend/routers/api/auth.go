@@ -100,9 +100,9 @@ func Login(c *gin.Context) {
 		"/",
 		"",
 		false,
-		true
+		true,
 	)
-	
+
 	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
 		"token": token,
 	})
