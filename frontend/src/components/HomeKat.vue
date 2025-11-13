@@ -1,21 +1,30 @@
 <script setup>
+defineProps({
+  material: {
+    type: Object,
+    required: true
+  }
+})
+
 const post = {
   user: {
     avatar: 'https://ui-avatars.com/api/?name=User+Name&background=0D8ABC&color=fff',
     name: 'User Name'
   },
-  tags: ['Мат.анализ', 'РТУ МИРЭА', '1 курс'],
-  timestamp: '2 часа назад',
-  description: 'Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди Скибиди '
+  tags: ['Мат.анализ', 'РТУ МИРЭА', '1 курс']
+}
+
+const formatDate = (dateString) => {
+  // Просто обрезаем строку без парса
+  return dateString.split('T')[0]
 }
 </script>
-
 
 <template>
   <article class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
     <!-- Header with avatar and metadata -->
     <header class="mb-4">
-      <div class="flex items-center gap-4"> <!-- Changed from items-start to items-center -->
+      <div class="flex items-center gap-4">
         <!-- Avatar -->
         <img 
           :src="post.user.avatar" 
@@ -37,7 +46,7 @@ const post = {
             </div>
             <!-- Timestamp -->
             <time class="text-sm text-gray-500">
-              {{ post.timestamp }}
+              {{ formatDate(material.upload_date) }}
             </time>
           </div>
         </div>
@@ -45,9 +54,14 @@ const post = {
     </header>
 
     <!-- Description -->
-    <div class="pl-10"> <!-- Adjusted padding to match new avatar size -->
+    <div class="pl-10">
+      <!-- Title -->
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">
+        {{ material.title }}
+      </h3>
+      <!-- Description -->
       <p class="text-gray-700 font-medium">
-        {{ post.description }}
+        {{ material.desc }}
       </p>
     </div>
   </article>
