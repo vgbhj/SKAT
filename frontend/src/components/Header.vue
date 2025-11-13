@@ -19,6 +19,14 @@ const handleLogout = async () => {
     console.error('Logout failed:', error)
   }
 }
+
+const handleAddMaterial = () => {
+  if (!authStore.isAuthenticated) {
+    router.push('/login')
+  } else {
+    router.push('/materials/add')
+  }
+}
 </script>
 
 <template>
@@ -65,10 +73,9 @@ const handleLogout = async () => {
             </div>
           </label>
 
-          <!-- Кнопка добавления материала (видна только для аутентифицированных) -->
-          <RouterLink
-            v-if="authStore.isAuthenticated"
-            to="/materials/add"
+          <!-- Кнопка добавления материала (видна всем) -->
+          <button
+            @click="handleAddMaterial"
             type="button"
             aria-label="Add"
             class="flex items-center justify-center w-8 h-8 rounded-full bg-blue_main text-white hover:opacity-90 transition-opacity"
@@ -87,7 +94,7 @@ const handleLogout = async () => {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-          </RouterLink>
+          </button>
         </div>
 
         <div class="flex items-center gap-4">
