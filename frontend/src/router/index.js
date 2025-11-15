@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView.vue'
 import RegaView from '@/views/RegaView.vue'
 import LoginView from '@/views/LoginView.vue'
 import AddMaterialView from '@/views/AddMaterialView.vue'
+import MaterialView from '@/views/MaterialView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
       name: 'addMaterial',
       component: AddMaterialView,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/materials/:id',
+      name: 'material',
+      component: MaterialView
     },
   ]
 })
