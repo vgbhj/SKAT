@@ -38,7 +38,7 @@ const handleSubmit = async () => {
     })
 
     if (response.ok) {
-      router.push('/materials')
+      router.push('/')
     } else {
       const data = await response.json()
       error.value = data.message || 'Ошибка при загрузке материала'
