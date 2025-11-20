@@ -41,8 +41,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-      args:
-        GOPROXY: direct
     ports:
       - "8080:8080"
     environment:
