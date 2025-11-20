@@ -10,6 +10,8 @@ RUN npm run build
 FROM golang:1.25-alpine AS backend-builder
 WORKDIR /app
 
+RUN apk add --no-cache git ca-certificates
+
 ENV GOPROXY=direct
 ENV GOSUMDB=off
 
