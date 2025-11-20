@@ -9,6 +9,10 @@ RUN npm run build
 # Build backend
 FROM golang:1.25-alpine AS backend-builder
 WORKDIR /app
+
+ENV GOPROXY=direct
+ENV GOSUMDB=off
+
 COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 COPY backend .
