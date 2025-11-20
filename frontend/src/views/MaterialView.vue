@@ -13,19 +13,27 @@ const downloading = ref(false)
 const fetchMaterial = async () => {
   loading.value = true
   error.value = ''
+  
+  const apiUrl = `/api/v1/materials/${route.params.id}`
+  console.log('Загрузка материала с URL:', apiUrl)
+  
   try {
-    const response = await fetch(`/api/v1/materials/${route.params.id}`, {
+    const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'accept': 'application/json'
       }
     })
 
+    console.log('Статус ответа:', response.status)
+
     if (response.ok) {
       const data = await response.json()
-      material.value = data.data.material
+      console.log('Данные материала:', data)
+      material.value = data.data
     } else {
       error.value = 'Ошибка при загрузке материала'
+      console.error('Ошибка при загрузке:', response.status)
     }
   } catch (err) {
     error.value = 'Ошибка сервера'
@@ -37,27 +45,50 @@ const fetchMaterial = async () => {
 
 const handleDownload = async () => {
   downloading.value = true
+  error.value = ''
+  
+  const downloadUrl = `/api/v1/materials/${route.params.id}/download`
+  console.log('Скачивание с URL:', downloadUrl)
+  
   try {
-    const response = await fetch(`/api/v1/materials/${route.params.id}/download`, {
-      method: 'GET'
+    const response = await fetch(downloadUrl, {
+      method: 'GET',
+      headers: {
+        'accept': 'application/octet-stream'
+      }
     })
+
+    console.log('Статус скачивания:', response.status)
 
     if (response.ok) {
       const blob = await response.blob()
+      console.log('Размер файла:', blob.size)
+      
+      // Получаем имя файла из заголовка или используем дефолтное
+      const filename = material.value.filename.split('/').pop() || 'download'
+      
+      // Создаём временный URL для скачивания
       const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = material.value.filename.split('/').pop()
-      document.body.appendChild(a)
-      a.click()
+      const link = document.createElement('a')
+      link.href = url
+      link.download = filename
+      
+      // Добавляем в DOM и кликаем
+      document.body.appendChild(link)
+      link.click()
+      
+      // Очищаем
+      document.body.removeChild(link)
       window.URL.revokeObjectURL(url)
-      a.remove()
+      
+      console.log('✅ Файл успешно скачан:', filename)
     } else {
-      error.value = 'Ошибка при скачивании файла'
+      error.value = `Ошибка при скачивании: ${response.status}`
+      console.error('❌ Ошибка скачивания:', response.status)
     }
   } catch (err) {
-    error.value = 'Ошибка при скачивании'
-    console.error('Download error:', err)
+    error.value = `Ошибка при скачивании: ${err.message}`
+    console.error('❌ Download error:', err)
   } finally {
     downloading.value = false
   }
@@ -79,6 +110,7 @@ const goBack = () => {
 }
 
 onMounted(() => {
+  console.log('MaterialView загружен, route.params.id:', route.params.id)
   fetchMaterial()
 })
 </script>
@@ -157,7 +189,7 @@ onMounted(() => {
           <button
             @click="handleDownload"
             :disabled="downloading"
-            class="inline-flex items-center bg-blue_main text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+            class="inline-flex items-center bg-blue_main text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 cursor-pointer"
           >
             <svg
               v-if="!downloading"
@@ -174,7 +206,8 @@ onMounted(() => {
                 d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
               />
             </svg>
-            <span>{{ downloading ? 'Скачивание...' : 'Скачать материал' }}</span>
+            <span v-if="downloading">Скачивание...</span>
+            <span v-else>Скачать материал</span>
           </button>
         </div>
       </div>
