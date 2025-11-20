@@ -28,17 +28,10 @@ const formatDate = (dateString) => {
     minute: '2-digit'
   }).format(date)
 }
-
-const goToMaterial = () => {
-  router.push({ name: 'material', params: { id: material.id } })
-}
 </script>
 
 <template>
-    <article 
-    @click="goToMaterial"
-    class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm hover:shadow-lg hover:cursor-pointer transition-all duration-200"
-  >
+  <article class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm hover:shadow-lg transition-all duration-200">
     <!-- Header with avatar and metadata -->
     <header class="mb-4">
       <div class="flex items-center gap-4">
@@ -71,11 +64,15 @@ const goToMaterial = () => {
     </header>
 
     <!-- Description -->
-    <div class="pl-10 cursor-pointer">
-      <!-- Title -->
-      <h3 class="text-lg font-semibold text-gray-900 mb-2 hover:text-blue_main transition-colors">
+    <div class="pl-10">
+      <!-- Title as link -->
+      <RouterLink
+        :to="{ name: 'material', params: { id: material.id } }"
+        class="text-lg font-semibold text-gray-900 mb-2 hover:text-blue_main transition-colors block"
+      >
         {{ material.title }}
-      </h3>
+      </RouterLink>
+      
       <!-- Description -->
       <p class="text-gray-700 font-medium">
         {{ material.desc }}
